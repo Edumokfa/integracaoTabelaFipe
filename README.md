@@ -9,12 +9,12 @@ Comandos para executar a aplicação: <br/>
 Configuração do banco de dados: <br/>
 
 `docker pull mongo:latest` <br/>
-`docker run -v ~/docker --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=integraFipe -e MONGO_INITDB_ROOT_PASSWORD=masterkey mongo` <br/>
+`docker run -d -p 27017:27017 --name integracaoFipeMongodb mongo:latest` <br/>
 
 após executar o banco de dados, é necessário abrir o terminal e se posicionar no diretório do projeto <br/>
-Quando estiver no diretório do projeto, execute os seguintes comandos:
+Quando estiver no diretório do projeto, execute os seguintes comandos: <br/>
 `mvn clean install` <br/>
-`docker build -t integracao-tabela-fipe .` <br/>
+`docker build -t integracao-tabela-fipe:1.0 .` <br/>
 `docker run -p 8080:8080 --name integracao-tabela-fipe-mongodb --link integracaoFipeMongodb:mongo -d integracao-tabela-fipe:1.0` <br/>
 
 Caso tudo funcione perfeitamente, a api está sendo executada.
