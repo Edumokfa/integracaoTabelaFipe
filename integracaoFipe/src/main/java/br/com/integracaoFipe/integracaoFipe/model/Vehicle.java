@@ -2,6 +2,7 @@ package br.com.integracaoFipe.integracaoFipe.model;
 
 import br.com.integracaoFipe.integracaoFipe.utils.MoneyDeserializer;
 import br.com.integracaoFipe.integracaoFipe.utils.MoneySerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -13,16 +14,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "modelYears")
+@Document(collection = "vehicle")
 public class Vehicle implements Serializable {
 
     @Id
-    @JsonProperty("codigo")
-    private String _id;
+    @JsonIgnore
+    private VehicleId _id;
+    @JsonProperty("CodigoFipe")
+    private String fipeCode;
     @JsonProperty("TipoVeiculo")
     private String type;
     @JsonProperty("Valor")
@@ -31,6 +37,8 @@ public class Vehicle implements Serializable {
     private BigDecimal value;
     @JsonProperty("Marca")
     private String brand;
+    @JsonProperty("CodigoMarca")
+    private Integer brandId;
     @JsonProperty("Modelo")
     private String model;
     @JsonProperty("AnoModelo")
@@ -39,8 +47,17 @@ public class Vehicle implements Serializable {
     private String gas;
     @JsonProperty("SiglaCombustivel")
     private String gasType;
-    @JsonProperty("CodigoFipe")
-    private String fipeCode;
     @JsonProperty("MesReferencia")
     private String refMonth;
+
+    @JsonIgnore
+    public boolean isMonthDiffActual(){
+        if (refMonth == null) {
+            return false;
+        }
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM", Locale.getDefault());
+        String actualMonthName = currentDate.format(format);
+        return refMonth.contains(actualMonthName);
+    }
 }

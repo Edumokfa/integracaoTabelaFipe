@@ -1,11 +1,11 @@
 package br.com.integracaoFipe.integracaoFipe.utils;
 
-import br.com.integracaoFipe.integracaoFipe.model.Model;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -29,5 +29,9 @@ public abstract class BaseApiCommunication implements Serializable {
     public Object getDataFromUrl(String endPathUrl, Class responseType) {
         Object response = restTemplate.getForObject(apiExternalUrl + endPathUrl, responseType);
         return response;
+    }
+
+    public void setApiExternalUrl(String apiExternalUrl) {
+        this.apiExternalUrl = apiExternalUrl;
     }
 }

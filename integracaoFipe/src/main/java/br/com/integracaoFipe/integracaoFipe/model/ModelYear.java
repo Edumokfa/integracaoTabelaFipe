@@ -1,5 +1,6 @@
 package br.com.integracaoFipe.integracaoFipe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +19,10 @@ import java.util.List;
 public class ModelYear implements Serializable {
 
     @Id
+    @JsonIgnore
+    private ModelYearId _id;
     @JsonProperty("codigo")
-    private String _id;
+    private String codigo;
     @JsonProperty("nome")
     private String name;
     @DBRef
